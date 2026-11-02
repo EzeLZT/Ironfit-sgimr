@@ -45,3 +45,5 @@ excepciones.
 1. Membresía vencida: el sistema no rechaza en seco; deriva al pago en Recepción,
    actualiza el vencimiento y reingresa al control de cupo.
 2. Cupo agotado: lista de espera en lugar de sobrecupo (problema de la Entrega 1).
+
+![Diagrama BPMN de reserva de clases](bpmn-reserva-clases.png)
