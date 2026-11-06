@@ -34,23 +34,28 @@ Alcance excluido (a propósito, por viabilidad): app móvil y notificaciones pus
 - Commits descriptivos con prefijo `docs:`.
 - PR n.º 1 con revisión previa al merge.
 
-## Declaración de Uso de IA
+## Declaración de Uso de Inteligencia Artificial
 
-Se utilizaron asistentes de IA (ChatGPT) con fines acotados y verificables:
-revisión de estilo y ortografía, sugerencias de estructura documental y apoyo procedural
-para Git/GitHub y BPMN. Control crítico humano aplicado sobre los resultados:
+### Herramienta utilizada
 
-- El asistente propuso mantener el campo `estado_pago` en la entidad MEMBRESÍA; se lo
-  eliminó tras detectar redundancia con `fecha_vencimiento` (observación docente
-  incorporada): el estado se calcula, no se almacena.
-- El asistente sugirió un Gantt con tareas en paralelo; se lo corrigió a secuencia
-  estricta porque el equipo es unipersonal, y se sumó una semana de contingencia.
-- El asistente propuso oportunidades y amenazas del FODA referidas al gimnasio; se las
-  reencuadró al proyecto de software, que es lo que pide la consigna.
-- Todos los diagramas (organigrama, bloques TGS, BPMN) fueron dibujados a mano por el
-  autor; la IA solo aportó la especificación textual previa.
-- Cada salida del modelo fue contrastada contra la consigna y la rúbrica antes de
-  aceptarse. Las decisiones de alcance (qué entidades y módulos quedan afuera) son
-  exclusivamente del autor.
+- **ChatGPT (OpenAI)**: corrección ortográfica, revisión de estilo, sugerencias de formato y apoyo en la estructuración de textos técnicos.
 
-La responsabilidad intelectual por errores u omisiones es íntegramente del estudiante.
+### Uso crítico y correcciones humanas
+
+La IA se utilizó como herramienta de apoyo para tareas mecánicas, manteniendo siempre el control intelectual del proyecto.
+
+**Decisiones conceptuales propias (sin IA):**
+
+- Elección del caso de estudio (IronFit) basada en conocimiento del rubro fitness.
+- Identificación de los tres problemas críticos (morosos falsos, sobrecupo, errores de carga).
+- Diseño del organigrama y ubicación del área de Sistemas al mismo nivel que Administración y Operaciones.
+- Definición de las reglas de negocio del SGIMR (morosidad calculada desde `fecha_vencimiento`, lista de espera por cupo agotado).
+
+**Correcciones humanas a sugerencias de la IA:**
+
+- Diccionario de datos v1: la IA propuso incluir `estado_pago` como Boolean; tras la retroalimentación docente (Entrega 3) lo eliminé por redundante con `fecha_vencimiento` y pasé a calcularlo dinámicamente.
+- Organigrama: la IA sugería colgar el área de Sistemas de Administración; la ubiqué al mismo nivel por su alcance transversal.
+- Gantt: la IA no detectó que, siendo equipo unipersonal, no podía planificar tareas en paralelo; secuencié los módulos y extendí el plazo a 13 semanas con contingencia.
+- BPMN: corregí a mano la conexión errónea "Confirmar reserva → Lista de espera" y agregué el subflujo de cupo liberado tras la observación docente de la Entrega 4.
+
+**Responsabilidad intelectual:** todo el contenido conceptual, las decisiones de diseño y la coherencia entre las cuatro entregas son de mi autoría. Los errores de la IA fueron identificados y corregidos por mí durante las revisiones.
