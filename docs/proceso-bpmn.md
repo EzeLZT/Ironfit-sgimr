@@ -6,12 +6,14 @@ mismo directorio) usa notación BPMN estándar con dos pools y compuertas XOR pa
 excepciones.
 
 ## Pools y lanes
+
 - Pool SOCIO (actor externo), lane única: Socio.
 - Pool IRONFIT (organización), lanes: Recepción, Entrenamiento, SGIMR (sistema).
 
 ## Elementos
+
 | ID | Tipo | Lane | Nombre |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | e1 | Evento inicio | Socio | Quiere reservar clase grupal |
 | t1 | Tarea | Socio | Ingresar al portal y seleccionar clase/horario |
 | r1 | Tarea de recepción | Socio | Recibe respuesta del sistema |
@@ -25,25 +27,40 @@ excepciones.
 | g2 | Compuerta XOR | SGIMR | ¿Cupo disponible? |
 | t6 | Tarea | SGIMR | Confirmar reserva y descontar cupo |
 | t5 | Tarea | SGIMR | Anotar en lista de espera |
+| e5 | Evento inicio por mensaje | SGIMR | Cupo liberado por cancelación |
+| t10 | Tarea | SGIMR | Avisar al primero de la lista de espera |
 | t8 | Tarea | Entrenamiento | Marcar asistencia en tablet al finalizar la clase |
 | t9 | Tarea | SGIMR | Registrar asistencia y actualizar reportes |
 | e3 | Evento fin | SGIMR | Reserva en lista de espera |
 | e4 | Evento fin | SGIMR | Reserva completada |
 
 ## Flujos de secuencia (flecha continua, dentro de cada pool)
+
 - Socio: e1 → t1 → r1 → t2 → e2.
 - IronFit: mS → g1. g1 --sí--> g2. g1 --no--> t4 → tR → tR2 → g2.
   g2 --sí--> t6 → t8 → t9 → e4. g2 --no--> t5 → e3.
+  Subflujo de cupo liberado: e5 → t10 → t6 (el primero de la lista acepta y el
+  sistema confirma y descuenta el cupo).
 
 ## Flujos de mensaje (flecha punteada, entre pools)
+
 - m1: t1 → mS ("Solicitud de reserva").
 - m2: t4 → r1 ("Aviso de cuota vencida").
 - m3: t6 → r1 ("Comprobante de reserva").
 - m4: t5 → r1 ("Aviso de lista de espera").
+- m5: t10 → r1 ("Aviso de cupo liberado").
 
 ## Excepciones contempladas
+
 1. Membresía vencida: el sistema no rechaza en seco; deriva al pago en Recepción,
    actualiza el vencimiento y reingresa al control de cupo.
 2. Cupo agotado: lista de espera en lugar de sobrecupo (problema de la Entrega 1).
+3. Cupo liberado: cuando una cancelación deja un lugar libre, el evento e5 inicia
+   el subflujo que avisa al primero de la lista de espera y confirma su reserva.
 
-![Diagrama BPMN de reserva de clases](bpmn-reserva-clases.png)
+## Corrección aplicada (observación de la Entrega 4)
+
+En la primera versión del diagrama existía una conexión errónea entre
+"Confirmar reserva y descontar cupo" y "Anotar en lista de espera", y faltaba
+representar el aviso por cupo liberado que sí estaba descrito en este documento.
+En esta versión se eliminó esa conexión y se incorporaron el evento e5 y la tarea t10.
